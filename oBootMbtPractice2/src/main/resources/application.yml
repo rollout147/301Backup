@@ -1,0 +1,26 @@
+server:
+  port: 8467
+# Oracle Connect
+spring:
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521/xe
+    username: scottJpa
+    password: tiger
+    
+  #JPA Setting
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+  # View Resolver
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp     
+
+  # Mybatis
+mybatis:
+  config-location: classpath:configuration.xml
+  mapper-locations: classpath:mappers/*.xml

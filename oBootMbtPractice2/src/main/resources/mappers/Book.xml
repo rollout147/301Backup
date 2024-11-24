@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.oracle.oBootMbtPractice2.BookMapper">
+
+	<select id="bookTotal" resultType="int">
+		SELECT COUNT(*)
+		FROM book
+	</select>
+	
+	<select id="tkBookAllList" parameterType="Book" resultType="Book">
+		SELECT *
+		FROM
+		(
+			SELECT rownum rn, a.*
+			FROM
+				(
+					SELECT * 
+					FROM book
+					ORDER BY bookno
+				)
+				a
+		)
+		WHERE rn 
+		BETWEEN #{start} AND #{end}
+	</select>
+
+	<select id="tkBookDetail" parameterType="int" resultType="Book">
+		SELECT *
+		FROM book
+		WHERE bookno = #{bookno}	
+	</select>
+	
+	<update id="tkBookUpdate" parameterType="Book">
+		UPDATE book SET bookname = #{bookname}
+					  , writer = #{writer}
+					  , genre = #{genre}
+					  , price = #{price}
+					  , artno = #{artno}
+		WHERE bookno = #{bookno}
+		
+	</update>
+	
+	<select id="tkBookManager" resultType="Book">
+		SELECT distinct genre
+		FROM book
+		
+	</select>
+	
+	<insert id="tkBookInsert" parameterType="Book">
+		INSERT into book
+		values (  #{bookno}, #{bookname}, #{writer}, 
+				  #{genre}, #{price}, #{artno}
+				)	
+	</insert>
+	
+	<delete id="deleteBook" parameterType="int">
+		DELETE	FROM book
+		WHERE	bookno = #{bookno}
+	
+	</delete>
+
+</mapper>
